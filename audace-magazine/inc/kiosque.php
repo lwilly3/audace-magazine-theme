@@ -117,6 +117,26 @@ add_action( 'init', function () {
     }, 10 );
 } );
 
+/**
+ * Sous Extra, la page du kiosque était une mise en page Divi qui affichait les numéros, et les
+ * réglages de WooCommerce dormaient. Sans Divi :
+ *  - WooCommerce affiche le contenu de la page boutique au-dessus de la grille : on en retire
+ *    les shortcodes Divi, qui apparaîtraient en clair (ce texte ne passe pas par the_content) ;
+ *  - le réglage « afficher les catégories » ferait montrer des catégories par année au lieu
+ *    des numéros : le kiosque montre toujours les numéros.
+ * Les réglages enregistrés ne sont pas modifiés.
+ */
+add_filter( 'woocommerce_short_description', 'am_sans_shortcodes', 1 );
+add_filter( 'woocommerce_format_content', function ( $html ) {
+    $html = am_sans_shortcodes( (string) $html );
+    return '' === trim( wp_strip_all_tags( $html ) ) && false === stripos( $html, '<img' ) ? '' : $html;
+}, 20 );
+foreach ( array( 'woocommerce_shop_page_display', 'woocommerce_category_archive_display' ) as $am_option ) {
+    add_filter( 'option_' . $am_option, function ( $valeur ) {
+        return is_admin() ? $valeur : '';
+    } );
+}
+
 // Le kiosque montre les numéros du plus récent au plus ancien.
 add_filter( 'woocommerce_default_catalog_orderby', function () {
     return 'date';
@@ -143,8 +163,13 @@ add_filter( 'woocommerce_is_sold_individually', function ( $unite, $produit ) {
     return ( is_object( $produit ) && $produit->is_downloadable() ) ? true : $unite;
 }, 10, 2 );
 
-// Les styles de WooCommerce ne servent que sur ses pages : inutile de les charger sur les articles.
-add_action( 'wp_enqueue_scripts', function () {
+/**
+ * Les styles et les scripts de WooCommerce ne servent que sur ses pages (kiosque, fiche,
+ * panier, commande, compte) : inutile de les charger sur les articles. Le suivi de la
+ * provenance des commandes (sourcebuster, order-attribution) est laissé partout, pour ne
+ * rien changer aux statistiques de vente.
+ */
+function am_alleger_woocommerce(): void {
     if ( ! am_kiosque_actif() || ! function_exists( 'is_woocommerce' ) ) {
         return;
     }
@@ -154,5 +179,10 @@ add_action( 'wp_enqueue_scripts', function () {
     foreach ( array( 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'wc-blocks-style', 'wc-blocks-vendors-style', 'brands-styles' ) as $style ) {
         wp_dequeue_style( $style );
     }
-    wp_dequeue_script( 'wc-cart-fragments' );
-}, 100 );
+    foreach ( array( 'wc-cart-fragments', 'wc-add-to-cart', 'woocommerce', 'jquery-blockui', 'wc-jquery-blockui', 'js-cookie', 'wc-js-cookie' ) as $script ) {
+        wp_dequeue_script( $script );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'am_alleger_woocommerce', 100 );
+add_action( 'wp_print_styles', 'am_alleger_woocommerce', 100 );         // Certains styles sont inscrits tardivement.
+add_action( 'wp_print_footer_scripts', 'am_alleger_woocommerce', 1 );   // De même pour les scripts de pied de page.

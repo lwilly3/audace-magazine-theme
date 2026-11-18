@@ -168,8 +168,30 @@ Leçons de cet essai, à ne pas refaire :
 - Python 3.9 du système refuse les longues lignes accentuées sans
   `# -*- coding: utf-8 -*-`.
 
-**Prochaine étape : le retour de l'utilisateur après installation sur la
-production** (voir la procédure donnée : prévisualisation en direct, puis
+**En production depuis le 2026-11-18** : l'utilisateur a activé le thème
+0.1.1 sur audacemagazine.com. Relevé du site après activation : accueil,
+article, rubrique, recherche, fiche d'un numéro, panier, compte et pages
+d'Ultimate Membership Pro s'affichent correctement, en français. Défauts
+trouvés sur le kiosque et corrigés en **0.1.2** :
+
+- la page boutique était une mise en page Divi : WooCommerce affiche son
+  contenu au-dessus de la grille **sans passer par `the_content`**, donc les
+  shortcodes Divi sortaient en clair (filtres `woocommerce_short_description`
+  et `woocommerce_format_content`) ;
+- le réglage WooCommerce « afficher les catégories », dormant sous Extra,
+  faisait montrer des catégories par année au lieu des numéros (filtre sur
+  les options, côté public seulement) ;
+- WordPress avait affecté tout seul l'ancien menu d'Extra à l'emplacement
+  « Rubriques » : on n'en garde que les rubriques, et il en faut trois ;
+- l'en-tête collant passait sous la barre d'administration.
+
+Pour reproduire un défaut de la production, recréer son état dans le
+WordPress local (contenu Divi de la page, options, menu) avant de corriger.
+
+**Prochaine étape : la release 0.1.2 par l'utilisateur, puis sa mise à
+jour depuis WordPress** (première mise à jour réelle sur l'hébergement).
+Ancienne étape, pour mémoire : le retour de l'utilisateur après installation
+sur la production (voir la procédure donnée : prévisualisation en direct, puis
 activation, retour arrière en réactivant « Extra Child Theme »), puis la
 liseuse dès que les PDF sont fournis.
 
@@ -285,6 +307,12 @@ du thème radio.
   rester sobre, une requête à la fois, espacées d'une à trois secondes.
   L'inventaire (environ 115 requêtes ainsi espacées) n'a provoqué aucun
   blocage.
+- **Incident du 2026-11-18** : douze requêtes à trois secondes d'intervalle
+  ont toutes reçu un 403 ; l'IP était déjà refusée et j'ai continué. Cette
+  IP est aussi celle du navigateur de l'utilisateur. Règle : **toujours une
+  seule requête d'abord, et s'arrêter net au premier 403** ; puis une page
+  toutes les six secondes au moins. Le blocage s'est levé en quelques
+  minutes.
 - Ne pas remplir de panier ni envoyer de formulaire en production : le
   parcours d'achat se teste sur un staging.
 - Secrets et identifiants : jamais dans ce dépôt ni dans les sorties.

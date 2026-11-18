@@ -1,5 +1,15 @@
 # Journal des modifications
 
+## [0.1.2] - 2026-11-18
+
+Corrections après la première activation sur le site.
+
+- Kiosque : le code de mise en page Divi ne s'affiche plus en clair au-dessus des numéros.
+- Kiosque : les numéros s'affichent, et non plus les catégories par année.
+- Menu : l'ancien menu d'Extra n'est repris que pour ses rubriques ; à défaut d'au moins trois rubriques, le menu automatique s'affiche.
+- En-tête : il n'est plus recouvert par la barre d'administration quand on est connecté.
+- Articles et accueil : les styles et scripts de WooCommerce ne sont plus chargés hors du kiosque, du panier, de la commande et du compte.
+
 ## [0.1.1] - 2026-11-18
 
 - Mise à jour du thème depuis les releases GitHub, dans l'écran natif de WordPress (Apparence › Thèmes), avec un lien « Vérifier les mises à jour maintenant ».

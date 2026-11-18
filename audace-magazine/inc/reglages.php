@@ -17,7 +17,7 @@ add_action( 'after_setup_theme', function () {
     add_image_size( 'am-carte', 800, 0 );
     add_image_size( 'am-une', 1600, 0 );
     register_nav_menus( array(
-        'principal' => 'Rubriques (laisser vide pour le menu automatique)',
+        'principal' => 'Rubriques (au moins trois rubriques, sinon le menu automatique)',
     ) );
 } );
 
@@ -126,25 +126,33 @@ function am_rubriques_menu(): array {
     if ( null !== $menu ) {
         return $menu;
     }
-    $menu       = array();
+    $menu         = array();
+    $ecartees     = am_maison()['rubriques_ecartees'];
     $emplacements = get_nav_menu_locations();
     if ( ! empty( $emplacements['principal'] ) ) {
-        $elements = wp_get_nav_menu_items( $emplacements['principal'] );
-        foreach ( (array) $elements as $e ) {
-            if ( (int) $e->menu_item_parent ) {
+        // Du menu réglé, on ne garde que les rubriques, sous-éléments compris : le kiosque et le
+        // compte ont leur place ailleurs dans l'en-tête. En changeant de thème, WordPress affecte
+        // souvent tout seul l'ancien menu à cet emplacement ; s'il ne contient pas au moins trois
+        // rubriques, c'est le menu automatique qui s'affiche.
+        foreach ( (array) wp_get_nav_menu_items( $emplacements['principal'] ) as $e ) {
+            if ( 'category' !== $e->object ) {
+                continue;
+            }
+            $terme = get_term( (int) $e->object_id, 'category' );
+            if ( ! $terme || is_wp_error( $terme ) || in_array( $terme->slug, $ecartees, true ) ) {
                 continue;
             }
             $menu[] = array(
-                'nom'     => $e->title,
+                'nom'     => am_nom_rubrique( $e->title ),
                 'url'     => $e->url,
-                'courant' => 'category' === $e->object && is_category( (int) $e->object_id ),
+                'courant' => is_category( (int) $e->object_id ),
             );
         }
-        if ( $menu ) {
+        if ( count( $menu ) >= 3 ) {
             return $menu;
         }
+        $menu = array();
     }
-    $ecartees = am_maison()['rubriques_ecartees'];
     $rubriques = get_categories( array( 'orderby' => 'count', 'order' => 'DESC', 'hide_empty' => true ) );
     foreach ( $rubriques as $r ) {
         if ( in_array( $r->slug, $ecartees, true ) || $r->count < 3 || count( $menu ) >= 7 ) {

@@ -420,3 +420,9 @@ svg.plein { width: 18px; height: 18px; fill: currentColor; flex: none; }
 .boutique .related ul.products, .boutique .upsells ul.products { margin-top: 20px; }
 .am .boutique ul.products li.product .button { display: inline-flex; margin-top: 4px; line-height: 1; }
 .boutique ul.products li.product .surtitre { display: block; margin-bottom: 6px; }
+
+/* Connecté, la barre d'administration de WordPress occupe le haut de l'écran : l'en-tête collant se place dessous. */
+.admin-bar .entete { top: 32px; }
+.admin-bar .progression { top: 32px; }
+@media (max-width: 782px) { .admin-bar .entete, .admin-bar .progression { top: 46px; } }
+@media (max-width: 600px) { .admin-bar .entete, .admin-bar .progression { top: 0; } }
