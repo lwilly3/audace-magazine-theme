@@ -2,8 +2,9 @@
 
 ## [0.1.3] - 2026-11-18
 
-- Partage (WhatsApp, Facebook, X) : l'accueil et les pages sans image ont une image au bon format, avec le logo entier et la devise, au lieu du logo rogné.
-- Partage de l'accueil : le nom du magazine et son accroche.
+- Partage du kiosque (WhatsApp, Facebook, X) : une image composée par le thème, avec les couvertures des cinq derniers numéros en éventail, et une description qui cite le dernier numéro. Elle se refait toute seule à chaque nouveau numéro.
+- Partage de l'accueil : une image composée comme la page elle-même (logo, titre et image de la une, trois articles suivants), et une description qui cite l'article à la une. Elle se refait toute seule à chaque nouvel article.
+- Partage des autres pages sans image : une image au bon format, avec le logo entier et la devise, au lieu du logo rogné.
 - Partage d'un article : le titre seul, sans « – Audace Magazine » répété.
 
 ## [0.1.2] - 2026-11-18

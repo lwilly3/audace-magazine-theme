@@ -18,5 +18,6 @@ require get_template_directory() . '/inc/reglages.php';  // Supports, feuilles d
 require get_template_directory() . '/inc/contenu.php';   // Nettoyage des titres et du corps des articles, restes de Divi.
 require get_template_directory() . '/inc/gabarits.php';  // Fragments d'affichage partagés.
 require get_template_directory() . '/inc/kiosque.php';   // Le magazine : intégration de WooCommerce.
+require get_template_directory() . '/inc/visuels.php';   // Images de partage composées : kiosque et accueil.
 require get_template_directory() . '/inc/partage.php';   // Description et fiche de partage (WhatsApp, Facebook, X).
 require get_template_directory() . '/inc/miseajour.php'; // Mises à jour depuis les releases GitHub.

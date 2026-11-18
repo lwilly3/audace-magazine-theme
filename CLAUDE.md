@@ -188,8 +188,22 @@ trouvés sur le kiosque et corrigés en **0.1.2** :
 Pour reproduire un défaut de la production, recréer son état dans le
 WordPress local (contenu Divi de la page, options, menu) avant de corriger.
 
-**Prochaine étape : la release 0.1.2 par l'utilisateur, puis sa mise à
-jour depuis WordPress** (première mise à jour réelle sur l'hébergement).
+**0.1.3 : fiche de partage** (demande de l'utilisateur après un essai sur
+WhatsApp). `inc/visuels.php` compose avec GD deux images de 1200 × 630,
+rangées dans `wp-content/uploads/audace-magazine/` et refaites seules quand
+leur contenu change (le nom du fichier porte une empreinte des données et de
+la version du thème) : le **kiosque** (couvertures des cinq derniers numéros
+en éventail) et l'**accueil** (logo, titre et image de la une, trois
+articles suivants). Sans GD ou en cas d'échec, repli sur l'image fixe
+`assets/img/partage.png`. La police de titre est embarquée en TTF pour
+écrire dans l'image. Descriptions propres à l'accueil, au kiosque, aux
+rubriques. Devise retenue : « L'Afrique autrement » (celle des couvertures),
+à confirmer par l'utilisateur. WhatsApp garde les anciens aperçus en mémoire
+plusieurs jours pour un lien déjà partagé.
+
+**Prochaine étape : la release 0.1.3 par l'utilisateur, puis sa mise à
+jour depuis WordPress** (la mise à jour par WordPress sur l'hébergement
+n'est pas encore confirmée).
 Ancienne étape, pour mémoire : le retour de l'utilisateur après installation
 sur la production (voir la procédure donnée : prévisualisation en direct, puis
 activation, retour arrière en réactivant « Extra Child Theme »), puis la

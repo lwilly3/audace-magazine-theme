@@ -23,6 +23,11 @@ add_action( 'wp_head', function () {
         // L'accueil se présente par le nom du magazine et son accroche, pas par le slogan du site seul.
         $titre = get_bloginfo( 'name' );
         $desc  = am_maison()['accroche'];
+        $une   = am_accueil()['une'];
+        if ( $une ) {
+            $desc .= ' À la une : ' . am_visuel_texte_simple( am_titre_propre( $une->post_title ) );
+        }
+        $visuel = am_visuel( 'accueil' );
     } elseif ( is_singular() ) {
         $post = get_queried_object();
         $url  = (string) get_permalink( $post );
@@ -48,8 +53,17 @@ add_action( 'wp_head', function () {
         $titre = $nom . ' – ' . get_bloginfo( 'name' );
         $desc  = $terme->description ? wp_strip_all_tags( $terme->description ) : 'Tous les articles : ' . $nom . '.';
     } elseif ( function_exists( 'is_shop' ) && is_shop() ) {
-        $url  = am_kiosque_url();
-        $desc = 'Tous les numéros d’Audace Magazine.';
+        $url     = am_kiosque_url();
+        $numeros = am_numeros( 1 );
+        $desc    = 'Tous les numéros d’Audace Magazine : dossiers, portraits et analyses de fond.';
+        if ( $numeros ) {
+            $desc .= ' Dernier numéro : ' . trim( $numeros[0]['numero'] . ', ' . am_visuel_texte_simple( $numeros[0]['titre'] ), ', ' ) . '.';
+        }
+        $visuel = am_visuel( 'kiosque' );
+    }
+    if ( ! empty( $visuel ) ) {
+        $image  = $visuel['url'];
+        $taille = array( $visuel['largeur'], $visuel['hauteur'] );
     }
     if ( ! $image ) {
         // Sans image propre, une image au format des fiches de partage (1200 × 630) : le logo seul,
