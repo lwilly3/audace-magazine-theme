@@ -1,5 +1,11 @@
 # Journal des modifications
 
+## [0.1.3] - 2026-11-18
+
+- Partage (WhatsApp, Facebook, X) : l'accueil et les pages sans image ont une image au bon format, avec le logo entier et la devise, au lieu du logo rogné.
+- Partage de l'accueil : le nom du magazine et son accroche.
+- Partage d'un article : le titre seul, sans « – Audace Magazine » répété.
+
 ## [0.1.2] - 2026-11-18
 
 Corrections après la première activation sur le site.

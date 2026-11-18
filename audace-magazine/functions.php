@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Version : toujours identique à l'en-tête de style.css (release.sh le vérifie).
-define( 'AUDACE_MAGAZINE_THEME_VERSION', '0.1.2' );
+define( 'AUDACE_MAGAZINE_THEME_VERSION', '0.1.3' );
 
 require get_template_directory() . '/inc/reglages.php';  // Supports, feuilles de style, scripts, accueil.
 require get_template_directory() . '/inc/contenu.php';   // Nettoyage des titres et du corps des articles, restes de Divi.
